@@ -1,14 +1,13 @@
 import "dotenv/config";
 import express from "express";
+import { connectToDB } from "./config/dbConfig.js";
 
 const app = express();
 const PORT = 3000;
 
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.json({ data: "eatmesoon" });
-});
+connectToDB();
 
 if (!process.env.PROD) {
   app.listen(PORT, (error) => {
