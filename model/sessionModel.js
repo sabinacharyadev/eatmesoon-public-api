@@ -6,8 +6,8 @@ export const createSession = (sessionObj) => {
 };
 
 // Delete Session
-export const deleteSession = (sessionId) => {
-  return sessionModel.findOneAndDelete({ sessionId });
+export const deleteSession = (deleteFilter) => {
+  return sessionModel.findOneAndDelete(deleteFilter);
 };
 
 // Find Session

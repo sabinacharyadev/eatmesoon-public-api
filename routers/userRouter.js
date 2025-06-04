@@ -1,13 +1,16 @@
 import express from "express";
 import { hashPassword } from "../utility/bcryptHelper";
-import { createUser } from "../model/userModel";
-import { createSession } from "../model/sessionModel";
+import { createUser, updateUser } from "../model/userModel";
+import { createSession, deleteSession } from "../model/sessionModel";
 import { v4 as uuidv4 } from "uuid";
 import {
   buildErrorResponse,
   buildSuccessResponse,
 } from "../utility/responseHelper";
-import { sendVerificationEmail } from "../utility/nodeMailerHelper";
+import {
+  sendVerificationEmail,
+  sendVerifiedEmail,
+} from "../utility/nodeMailerHelper";
 
 const userRouter = express.Router();
 
@@ -47,7 +50,40 @@ userRouter.post("/", async (req, res) => {
         )
       : buildErrorResponse(res, "An error occurred, please try again");
   } catch (error) {
-    buildErrorResponse(res, error.message);
+    if (error.code === 11000) {
+      error.message = "User with this email already exists!!";
+    }
+    console.log(error);
+    buildErrorResponse(res, "Something went wrong");
+  }
+});
+
+// Verify User | PATCH
+userRouter.patch("/", async (req, res) => {
+  try {
+    const { token, email } = req.body;
+    //   verify email in session table
+    const result = deleteSession({ token, email });
+
+    if (!result?._id) {
+      buildErrorResponse(res, "Invalid Link");
+      return;
+    }
+
+    // update user in db
+    const user = await updateUser({ email: email }, { isVerified: true });
+
+    if (user?._id) {
+      // Send Verified email
+      sendVerifiedEmail(user.email, user.name);
+    }
+
+    user?._id
+      ? buildSuccessResponse(res, {}, "User verified, please Login")
+      : buildErrorResponse(res, {}, "Could not verify user");
+  } catch (error) {
+    console.log("Error:", error);
+    buildErrorResponse(res, "Something went wrong");
   }
 });
 

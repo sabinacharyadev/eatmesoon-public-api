@@ -47,3 +47,29 @@ export const sendVerificationEmail = (email, name, verificationUrl) => {
   };
   sendEmail(emailObj);
 };
+
+export const sendVerifiedEmail = (email, name) => {
+  const emailObj = {
+    from: process.env.SMTP_USER,
+    to: email,
+    subject: "Email Verified For your Account",
+    html: `
+    <table style="width: 100%; max-width: 600px; margin: 0 auto; padding: 20px; border-collapse: collapse;">
+        <tr>
+            <td style="text-align: center;">
+                <h1>Account Verification</h1>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p>Dear ${name},</p>
+                <p>Thank you for signing up with us.</p>
+                <p>You are now verified.</p>
+                <p>Thank you,<br> Eatmesoon Team</p>
+            </td>
+        </tr>
+    </table>
+    `,
+  };
+  sendEmail(emailObj);
+};
