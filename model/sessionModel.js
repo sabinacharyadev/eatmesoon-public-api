@@ -11,6 +11,6 @@ export const deleteSession = (deleteFilter) => {
 };
 
 // Find Session
-export const findSession = (sessionId) => {
-  return sessionModel.findOne({ sessionId });
+export const findSession = (sessionFilter) => {
+  return sessionModel.findOne(sessionFilter);
 };

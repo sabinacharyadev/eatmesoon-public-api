@@ -12,6 +12,7 @@ import {
   sendVerifiedEmail,
 } from "../utility/nodeMailerHelper";
 import { generateJWT } from "../utility/jwtHelper";
+import { userAuth } from "../middlewares/authMiddleware";
 
 const userRouter = express.Router();
 
@@ -123,6 +124,18 @@ userRouter.post("/login", async (req, res) => {
     console.log(error);
     buildErrorResponse(res, "Something went wrong");
   }
+});
+
+// Private Endpoint
+// Get user | GET
+userRouter.get("/", userAuth, (req, res) => {
+  try {
+    buildSuccessResponse(res, req.userInfo);
+  } catch (error) {
+    console.log(error);
+    buildErrorResponse(res, "Something went wrong");
+  }
+  // send user info
 });
 
 export default userRouter;
