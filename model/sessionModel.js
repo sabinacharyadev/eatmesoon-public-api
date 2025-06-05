@@ -1,4 +1,4 @@
-import sessionModel from "../schema/sessionSchema";
+import sessionModel from "../schema/sessionSchema.js";
 
 // Create Session
 export const createSession = (sessionObj) => {

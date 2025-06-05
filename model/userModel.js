@@ -1,4 +1,4 @@
-import userModel from "../schema/userSchema";
+import userModel from "../schema/userSchema.js";
 
 // create a user
 export const createUser = (userObj) => {

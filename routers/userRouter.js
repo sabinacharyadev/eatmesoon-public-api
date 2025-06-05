@@ -1,18 +1,18 @@
 import express from "express";
-import { comparePassword, hashPassword } from "../utility/bcryptHelper";
-import { createUser, findUserByEmail, updateUser } from "../model/userModel";
-import { createSession, deleteSession } from "../model/sessionModel";
+import { comparePassword, hashPassword } from "../utility/bcryptHelper.js";
+import { createUser, findUserByEmail, updateUser } from "../model/userModel.js";
+import { createSession, deleteSession } from "../model/sessionModel.js";
 import { v4 as uuidv4 } from "uuid";
 import {
   buildErrorResponse,
   buildSuccessResponse,
-} from "../utility/responseHelper";
+} from "../utility/responseHelper.js";
 import {
   sendVerificationEmail,
   sendVerifiedEmail,
-} from "../utility/nodeMailerHelper";
-import { generateJWT } from "../utility/jwtHelper";
-import { userAuth } from "../middlewares/authMiddleware";
+} from "../utility/nodeMailerHelper.js";
+import { generateJWT } from "../utility/jwtHelper.js";
+import { userAuth } from "../middlewares/authMiddleware.js";
 
 const userRouter = express.Router();
 
@@ -37,8 +37,8 @@ userRouter.post("/", async (req, res) => {
 
       if (session?._id) {
         const CLIENT_ROOT_URL = process.env.PROD
-          ? PROD_CLIENT_URL
-          : LOCAL_CLIENT_URL;
+          ? process.env.PROD_CLIENT_URL
+          : process.env.LOCAL_CLIENT_URL;
         const verificationUrl = `${CLIENT_ROOT_URL}/verify_user?email=${user.email}?token=${session.token}`;
         sendVerificationEmail(user.email, user.name, verificationUrl);
       }
