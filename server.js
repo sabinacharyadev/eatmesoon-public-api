@@ -3,6 +3,7 @@ import express from "express";
 import { connectToDB } from "./config/dbConfig.js";
 import cors from "cors";
 import userRouter from "./routers/userRouter.js";
+import productRouter from "./routers/productRouter.js";
 
 const app = express();
 const PORT = 3000;
@@ -16,6 +17,7 @@ connectToDB();
 
 // Routers
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/products", productRouter);
 
 if (!process.env.PROD) {
   app.listen(PORT, (error) => {

@@ -5,6 +5,11 @@ export const createProduct = (productObj) => {
   return productModel(productObj).save();
 };
 
+// get all products
+export const getAllProducts = (user_id) => {
+  return productModel.find({ user_id });
+};
+
 // find a product by id
 export const findProductById = (id) => {
   return productModel.findOne({ id });

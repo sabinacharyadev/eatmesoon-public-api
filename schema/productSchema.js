@@ -22,6 +22,10 @@ const productSchema = mongoose.Schema(
       type: Date,
       required: true,
     },
+    user_id: {
+      type: mongoose.Types.ObjectId,
+      required: true,
+    },
   },
   {
     timestamps: true,
