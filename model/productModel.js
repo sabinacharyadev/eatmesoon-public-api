@@ -1,4 +1,4 @@
-import productModel from "../schema/productSchema";
+import productModel from "../schema/productSchema.js";
 
 // create a product
 export const createProduct = (productObj) => {

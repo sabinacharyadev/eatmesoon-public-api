@@ -1,16 +1,16 @@
 import express from "express";
-import { userAuth } from "../middlewares/authMiddleware";
+import { userAuth } from "../middlewares/authMiddleware.js";
 import {
   buildErrorResponse,
   buildSuccessResponse,
-} from "../utility/responseHelper";
+} from "../utility/responseHelper.js";
 import {
   createProduct,
   deleteProducts,
   findProductById,
   getAllProducts,
   updateProduct,
-} from "../model/productModel";
+} from "../model/productModel.js";
 
 const productRouter = express.Router();
 
