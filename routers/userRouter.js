@@ -39,7 +39,7 @@ userRouter.post("/", async (req, res) => {
         const CLIENT_ROOT_URL = process.env.PROD
           ? process.env.PROD_CLIENT_URL
           : process.env.LOCAL_CLIENT_URL;
-        const verificationUrl = `${CLIENT_ROOT_URL}/verify_user?email=${user.email}?token=${session.token}`;
+        const verificationUrl = `${CLIENT_ROOT_URL}/verify_user?email=${user.email}&token=${session.token}`;
         sendVerificationEmail(user.email, user.name, verificationUrl);
       }
     }
